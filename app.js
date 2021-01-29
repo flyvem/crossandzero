@@ -141,6 +141,14 @@ function compX() {
             sumXw[6][1] = -2;
             sumXw[7][1] = -2;
             counter+=1;
+        }else if (+altArr[8] === 2){
+            imgAll[3].src = ao;
+            imgAll[3].alt = -2;
+            altArr[2] = -2;
+            sumXw[0][2] = -2;
+            sumXw[5][0] = -2;
+            sumXw[7][2] = -2;
+            counter+=1;
         } else {
             check(-4, 4, -2, 2, 0, ao)
         }
@@ -568,7 +576,6 @@ function xoReset() {
     sumXw = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
     counter = 0;
     ppp = 0;
-
     xVictory.style.background = '#07788d';
     for (let i = 1; i < imgAll.length; i++) {
         imgAll[i].alt = '0';
