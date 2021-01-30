@@ -16,7 +16,6 @@ let click = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [
 let altArr = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
 let sumXw = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
-
 function xo(go) {
     if (go.alt === '0' && flagEnd === true) {
         if (flagCrossZero === false) {
@@ -24,13 +23,11 @@ function xo(go) {
             go.src = ao;
             go.alt = -2;
             compO()
-            forClick()
         } else {
-            write(go, 2);
             go.src = ax;
             go.alt = 2;
+            write(go, 2);
             compX()
-            forClick()
         }
     }
 }
@@ -45,8 +42,9 @@ function comp() {
 }
 
 function forClick() {
+    drawEnd ()
     for (let i = 0; i < 8; i++) {
-        if (sumStringXw(i) === 6) {
+        if (sumStringXw(i) === 6 && flagEnd === true) {
             for (let j = 0; j < 3; j++) {
                 let a = click[i][j];
                 imgAll[a].src = ax2;
@@ -61,7 +59,7 @@ function forClick() {
             }
             flagEnd = false;
             break;
-        } else if (sumStringXw(i) === -6) {
+        } else if (sumStringXw(i) === -6 && flagEnd === true) {
             for (let j = 0; j < 3; j++) {
                 let a = click[i][j];
                 imgAll[a].src = ao2;
@@ -76,7 +74,7 @@ function forClick() {
             }
             flagEnd = false;
             break;
-        } else if (counter >= 9) {
+        } else if (counter === 9 &&  draw === true) {
             xVictory.style.display = 'block';
             xVictory.value = 'Ничья! Restart!';
             flagEnd = false;
@@ -85,8 +83,17 @@ function forClick() {
     }
 }
 
+let draw = true;
+function drawEnd (){
+    for (let i = 0; i < 8; i++){
+        if (+sumStringXw(i) === 6 || +sumStringXw(i) === -6){
+            draw = false;
+        }
+    }
+}
 
 function compX() {
+    forClick()
     ppp = counter
     if (counter === 1) {
         if (+altArr[4] === 0) {
@@ -141,7 +148,7 @@ function compX() {
             sumXw[6][1] = -2;
             sumXw[7][1] = -2;
             counter+=1;
-        }else if (+altArr[8] === 2){
+        }else if (+altArr[8] === 2 && +altArr[2] === -2 ){
             imgAll[3].src = ao;
             imgAll[3].alt = -2;
             altArr[2] = -2;
@@ -157,7 +164,6 @@ function compX() {
 
     } else if (counter === 7) {
         check(-4, 4, -2, 2, 0, ao)
-
     } else if (counter === 9) {
         check(-4, 4, -2, 2, 0, ao)
     }
@@ -201,9 +207,10 @@ function checkSection(npo, k, l) {
 }
 
 function compO() {
+    forClick()
 ppp = counter
     if (counter === 0) {
-        imgAll[5].src = ax
+        imgAll[5].src = ax;
         imgAll[5].alt = 2;
         altArr[4] = 2;
         sumXw[1][1] = 2;
@@ -254,6 +261,7 @@ ppp = counter
     } else if (counter === 8) {
         check(4, -4, 2, -2, 0, ax)
     }
+
 }
 
 function sumStringXw(n) {
@@ -271,6 +279,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[z + 1].alt = b;
             altArr[z] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 1 && +imgAll[x + 1].alt === 0) {
             sumXw[0][1] = b;
             sumXw[4][0] = b;
@@ -278,6 +287,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[x + 1].alt = b;
             altArr[x] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 2 && +imgAll[c + 1].alt === 0) {
             sumXw[0][2] = b;
             sumXw[5][0] = b;
@@ -286,6 +296,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[c + 1].alt = b;
             altArr[c] = b;
             counter+=1;
+            forClick()
         }
     } else if (n === 1) {
         if (indexZero === 0 && +imgAll[z + 1].alt === 0) {
@@ -295,6 +306,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[z + 1].alt = b;
             altArr[z] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 1 && +imgAll[x + 1].alt === 0) {
             sumXw[1][1] = b;
             sumXw[4][1] = b;
@@ -304,6 +316,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[x + 1].alt = b;
             altArr[x] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 2 && +imgAll[c + 1].alt === 0) {
             sumXw[1][2] = b;
             sumXw[5][1] = b;
@@ -311,6 +324,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[c + 1].alt = b;
             altArr[c] = b;
             counter+=1;
+            forClick()
         }
     } else if (n === 2) {
         if (indexZero === 0 && +imgAll[z + 1].alt === 0) {
@@ -321,6 +335,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[z + 1].alt = b;
             altArr[z] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 1 && +imgAll[x + 1].alt === 0) {
             sumXw[2][1] = b;
             sumXw[4][2] = b;
@@ -328,6 +343,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[x + 1].alt = b;
             altArr[x] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 2 && +imgAll[c + 1].alt === 0) {
             sumXw[2][2] = b;
             sumXw[5][2] = b;
@@ -336,6 +352,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[c + 1].alt = b;
             altArr[c] = b;
             counter+=1;
+            forClick()
         }
     } else if (n === 3) {
         if (indexZero === 0 && +imgAll[z + 1].alt === 0) {
@@ -346,6 +363,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[z + 1].alt = b;
             altArr[z] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 1 && +imgAll[x + 1].alt === 0) {
             sumXw[1][0] = b;
             sumXw[3][1] = b;
@@ -353,6 +371,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[x + 1].alt = b;
             altArr[x] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 2 && +imgAll[c + 1].alt === 0) {
             sumXw[2][0] = b;
             sumXw[3][2] = b;
@@ -361,6 +380,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[c + 1].alt = b;
             altArr[c] = b;
             counter+=1;
+            forClick()
         }
     } else if (n === 4) {
         if (indexZero === 0 && +imgAll[z + 1].alt === 0) {
@@ -370,6 +390,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[z + 1].alt = b;
             altArr[z] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 1 && +imgAll[x + 1].alt === 0) {
             sumXw[1][1] = b;
             sumXw[4][1] = b;
@@ -379,6 +400,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[x + 1].alt = b;
             altArr[x] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 2 && +imgAll[c + 1].alt === 0) {
             sumXw[2][1] = b;
             sumXw[4][2] = b;
@@ -386,6 +408,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[c + 1].alt = b;
             altArr[c] = b;
             counter+=1;
+            forClick()
         }
     } else if (n === 5) {
         if (indexZero === 0 && +imgAll[z + 1].alt === 0) {
@@ -396,6 +419,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[z + 1].alt = b;
             altArr[z] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 1 && +imgAll[x + 1].alt === 0) {
             sumXw[1][2] = b;
             sumXw[5][1] = b;
@@ -403,6 +427,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[x + 1].alt = b;
             altArr[x] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 2 && +imgAll[c + 1].alt === 0) {
             sumXw[2][2] = b;
             sumXw[5][2] = b;
@@ -411,6 +436,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[c + 1].alt = b;
             altArr[c] = b;
             counter+=1;
+            forClick()
         }
     } else if (n === 6) {
         if (indexZero === 0 && +imgAll[z + 1].alt === 0) {
@@ -421,6 +447,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[z + 1].alt = b;
             altArr[z] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 1 && +imgAll[x + 1].alt === 0) {
             sumXw[1][1] = b;
             sumXw[4][1] = b;
@@ -430,6 +457,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[x + 1].alt = b;
             altArr[x] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 2 && +imgAll[c + 1].alt === 0) {
             sumXw[2][2] = b;
             sumXw[5][2] = b;
@@ -438,6 +466,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[c + 1].alt = b;
             altArr[c] = b;
             counter+=1;
+            forClick()
         }
     } else if (n === 7) {
         if (indexZero === 0 && +imgAll[z + 1].alt === 0) {
@@ -448,6 +477,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[z + 1].alt = b;
             altArr[z] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 1 && +imgAll[x + 1].alt === 0) {
             sumXw[1][1] = b;
             sumXw[4][1] = b;
@@ -457,6 +487,7 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[x + 1].alt = b;
             altArr[x] = b;
             counter+=1;
+            forClick()
         } else if (indexZero === 2 && +imgAll[c + 1].alt === 0) {
             sumXw[0][2] = b;
             sumXw[5][0] = b;
@@ -465,71 +496,82 @@ function zeroZero(n, z, x, c, v, b) {
             imgAll[c + 1].alt = b;
             altArr[c] = b;
             counter+=1;
+            forClick()
         }
     }
 }
 
 function write(go, d) {
+    forClick()
     if (go.id === '1') {
+        counter += 1;
         sumXw[0][0] = d;
         sumXw[3][0] = d;
         sumXw[6][0] = d;
         altArr[0] = d;
         imgAll[1].alt = d;
-        counter += 1;
+        forClick()
     } else if (go.id === '2') {
+        counter += 1;
         sumXw[0][1] = d;
         sumXw[4][0] = d;
         altArr[1] = d;
         imgAll[2].alt = d;
-        counter += 1;
+        forClick()
     } else if (go.id === '3') {
+        counter += 1;
         sumXw[0][2] = d;
         sumXw[5][0] = d;
         sumXw[7][2] = d;
         altArr[2] = d;
         imgAll[3].alt = d;
-        counter += 1;
+        forClick()
     } else if (go.id === '4') {
+        counter += 1;
         sumXw[1][0] = d;
         sumXw[3][1] = d;
         altArr[3] = d;
         imgAll[4].alt = d;
-        counter += 1;
+        forClick()
     } else if (go.id === '5') {
+        counter += 1;
         sumXw[1][1] = d;
         sumXw[4][1] = d;
         sumXw[6][1] = d;
         sumXw[7][1] = d;
         altArr[4] = d;
         imgAll[5].alt = d;
-        counter += 1;
+        forClick()
     } else if (go.id === '6') {
+        counter += 1;
         sumXw[1][2] = d;
         sumXw[5][1] = d;
         altArr[5] = d;
         imgAll[6].alt = d;
-        counter += 1;
+        forClick()
     } else if (go.id === '7') {
+        counter += 1;
         sumXw[2][0] = d;
         sumXw[3][2] = d;
         sumXw[7][0] = d;
         altArr[6] = d;
         imgAll[7].alt = d;
-        counter += 1;
+        forClick()
     } else if (go.id === '8') {
+        counter += 1;
         sumXw[2][1] = d;
         sumXw[4][2] = d;
         altArr[7] = d;
         imgAll[8].alt = d;
-        counter += 1;
+        forClick()
     } else if (go.id === '9') {
+        counter += 1;
         sumXw[2][2] = d;
         sumXw[5][2] = d;
         sumXw[6][2] = d;
         altArr[8] = d;
         imgAll[9].alt = d;
-        counter += 1;
+        forClick()
     }
 }
 
@@ -554,6 +596,7 @@ function play() {
     elemR.style.display = 'block'
     elemR.disabled = false;
     elem.disabled = true;
+    draw = true;
     block.style.display = 'block'
     flagCrossZero = elem.value !== 'Нолик';
 }
@@ -576,6 +619,7 @@ function xoReset() {
     sumXw = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
     counter = 0;
     ppp = 0;
+    draw = true;
     xVictory.style.background = '#07788d';
     for (let i = 1; i < imgAll.length; i++) {
         imgAll[i].alt = '0';
